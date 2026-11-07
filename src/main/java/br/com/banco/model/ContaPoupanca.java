@@ -1,19 +1,29 @@
 package br.com.banco.model;
 
 import br.com.banco.exception.SaldoInsuficienteException;
+import br.com.banco.exception.ValorInvalidoException;
 
 public class ContaPoupanca extends Conta {
     private double taxaRendimento;
+    private final String titular;
 
     public ContaPoupanca(int numero, int agencia, double taxaRendimento) {
+        this(numero, agencia, "Titular " + numero, taxaRendimento);
+    }
+
+    public ContaPoupanca(int numero, int agencia, String titular, double taxaRendimento) {
         super(numero, agencia);
+        if (taxaRendimento <= 0 || taxaRendimento > 1) {
+            throw new ValorInvalidoException("taxa de rendimento", taxaRendimento);
+        }
         this.taxaRendimento = taxaRendimento;
+        this.titular = titular;
     }
 
     @Override
     public void sacar(double valor) throws SaldoInsuficienteException {
         if (valor <= 0) {
-            throw new SaldoInsuficienteException("Valor de saque deve ser positivo");
+            throw new ValorInvalidoException("saque", valor);
         }
         if (valor > this.saldo) {
             throw new SaldoInsuficienteException(
@@ -32,9 +42,13 @@ public class ContaPoupanca extends Conta {
         return taxaRendimento;
     }
 
+    public String getTitular() {
+        return titular;
+    }
+
     @Override
     public String toString() {
-        return String.format("ContaPoupanca{numero=%d, agencia=%d, saldo=%.2f, taxaRendimento=%.4f}",
-            numero, agencia, saldo, taxaRendimento);
+        return String.format("ContaPoupanca{numero=%d, agencia=%d, titular=%s, saldo=%.2f, taxaRendimento=%.4f, criada=%s}",
+            getNumero(), getAgencia(), titular, saldo, taxaRendimento, getDataCriacaoFormatada());
     }
 }
