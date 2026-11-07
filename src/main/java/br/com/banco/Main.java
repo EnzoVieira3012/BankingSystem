@@ -15,13 +15,11 @@ import java.util.List;
 public class Main {
 
     private static final BancoService service = new BancoService();
-    private static final ExtratoWriter extratoWriter = new ExtratoWriter();
-    private static final BackupContas backupContas = new BackupContas();
 
     public static void main(String[] args) {
         // Restaurar backup ao iniciar
-        if (backupContas.backupExiste()) {
-            backupContas.restaurar(service);
+        if (BackupContas.backupExiste()) {
+            BackupContas.restaurar(service);
             System.out.println("Backup restaurado: " + service.listarContas().size() + " contas carregadas.");
         }
 
@@ -33,7 +31,7 @@ public class Main {
         } while (opcao != 0);
 
         // Salvar backup ao sair
-        backupContas.salvar(service);
+        BackupContas.salvar(service);
         System.out.println("Sistema encerrado. Backup salvo. Até logo!");
     }
 
@@ -156,7 +154,7 @@ public class Main {
             if (c == null) {
                 throw new ContaNaoEncontradaException(numero, agencia);
             }
-            extratoWriter.gravarExtrato(c, arquivo);
+            ExtratoWriter.gravarExtrato(c, arquivo);
             System.out.println("Extrato gravado em: " + arquivo);
         } catch (ContaNaoEncontradaException e) {
             System.out.println("Erro: " + e.getMessage());
@@ -179,7 +177,7 @@ public class Main {
 
     private static void fluxoBackupManual() {
         System.out.println("\n--- BACKUP MANUAL ---");
-        backupContas.salvar(service);
+        BackupContas.salvar(service);
         System.out.println("Backup realizado com sucesso!");
     }
 }

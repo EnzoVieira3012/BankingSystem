@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
  */
 public final class ExtratoWriter {
 
-    private static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     private ExtratoWriter() {

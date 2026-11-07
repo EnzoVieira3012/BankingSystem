@@ -28,7 +28,7 @@ class ExtratoWriterTest {
 
         @Test
         @DisplayName("Grava extrato ContaCorrente")
-        void gravarContaCorrente() throws IOException {
+        void gravarContaCorrente() throws IOException, ValorInvalidoException {
             ContaCorrente cc = new ContaCorrente(1234, 1, 500);
             cc.depositar(100);
 
@@ -46,7 +46,7 @@ class ExtratoWriterTest {
 
         @Test
         @DisplayName("Grava extrato ContaPoupanca")
-        void gravarContaPoupanca() throws IOException {
+        void gravarContaPoupanca() throws IOException, ValorInvalidoException {
             ContaPoupanca cp = new ContaPoupanca(5678, 1, 0.01);
             cp.depositar(1000);
 

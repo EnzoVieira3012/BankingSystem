@@ -5,6 +5,7 @@ import br.com.banco.model.ContaCorrente;
 import br.com.banco.model.ContaPoupanca;
 import br.com.banco.service.BancoService;
 import br.com.banco.exception.ExceptionChainHandler;
+import br.com.banco.exception.ValorInvalidoException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -58,7 +59,7 @@ public final class BackupContas {
      * Restaura contas do arquivo para o service.
      * @return lista de contas restauradas
      */
-    public static List<Conta> restaurar(BancoService service) throws IOException {
+    public static List<Conta> restaurar(BancoService service) throws IOException, ValorInvalidoException {
         List<Conta> restauradas = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(FILE))) {
             String linha;
@@ -74,15 +75,15 @@ public final class BackupContas {
 
                 Conta c;
                 if ("CORRENTE".equals(tipo)) {
-                    c = new ContaCorrente(numero, agencia, extra);
+                    c = new ContaCorrente(numero, agencia, "Titular " + numero, extra);
                 } else if ("POUPANCA".equals(tipo)) {
-                    c = new ContaPoupanca(numero, agencia, extra);
+                    c = new ContaPoupanca(numero, agencia, "Titular " + numero, extra);
                 } else {
                     continue;
                 }
                 // Deposita para restaurar saldo (construtor zera saldo)
                 c.depositar(saldo);
-                service.listarContas().add(c); // acesso direto para restore
+                service.adicionarContaRestore(c);
                 restauradas.add(c);
             }
         } catch (IOException e) {

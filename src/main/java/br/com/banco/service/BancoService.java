@@ -6,7 +6,6 @@ import br.com.banco.model.ContaPoupanca;
 import br.com.banco.exception.SaldoInsuficienteException;
 import br.com.banco.exception.ContaNaoEncontradaException;
 import br.com.banco.exception.ValorInvalidoException;
-import br.com.banco.exception.ExceptionChainHandler;
 import br.com.banco.util.ContaGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class BancoService {
     }
 
     // Factory methods
-    public ContaCorrente criarContaCorrente(String titular, double limite) {
+    public ContaCorrente criarContaCorrente(String titular, double limite) throws ValorInvalidoException {
         // Precondition: limite >= 0
         assert limite >= 0 : "Pré-condição violada: limite deve ser >= 0";
         assert titular != null && !titular.trim().isEmpty() : "Pré-condição violada: titular não pode ser vazio";
@@ -59,7 +58,7 @@ public class BancoService {
         return cc;
     }
 
-    public ContaPoupanca criarContaPoupanca(String titular, double taxaRendimento) {
+    public ContaPoupanca criarContaPoupanca(String titular, double taxaRendimento) throws ValorInvalidoException {
         // Precondition: taxa > 0 e <= 1 (100%)
         assert taxaRendimento > 0 && taxaRendimento <= 1 : "Pré-condição violada: taxa deve ser entre 0 e 1";
         assert titular != null && !titular.trim().isEmpty() : "Pré-condição violada: titular não pode ser vazio";
@@ -162,6 +161,12 @@ public class BancoService {
         assert copia != contas : "Pós-condição violada: retornou mesma referência da lista";
         assert copia.size() == contas.size() : "Pós-condição violada: tamanho da cópia difere do original";
         return copia;
+    }
+
+    // Para uso interno de backup/restore
+    void adicionarContaRestore(Conta c) {
+        contas.add(c);
+        checkInvariants();
     }
 
     // Extrato

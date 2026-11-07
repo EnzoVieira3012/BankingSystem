@@ -27,7 +27,7 @@ class BancoServiceTest {
 
         @Test
         @DisplayName("criarContaCorrente adiciona à lista e retorna conta")
-        void criarContaCorrente() {
+        void criarContaCorrente() throws ValorInvalidoException {
             ContaCorrente cc = service.criarContaCorrente(500);
             assertNotNull(cc);
             assertEquals(500, cc.getLimite());
@@ -36,7 +36,7 @@ class BancoServiceTest {
 
         @Test
         @DisplayName("criarContaPoupanca adiciona à lista e retorna conta")
-        void criarContaPoupanca() {
+        void criarContaPoupanca() throws ValorInvalidoException {
             ContaPoupanca cp = service.criarContaPoupanca(0.01);
             assertNotNull(cp);
             assertEquals(0.01, cp.getTaxaRendimento());
@@ -45,7 +45,7 @@ class BancoServiceTest {
 
         @Test
         @DisplayName("Múltiplas contas: lista cresce")
-        void multiplasContas() {
+        void multiplasContas() throws ValorInvalidoException {
             service.criarContaCorrente(100);
             service.criarContaPoupanca(0.02);
             service.criarContaCorrente(200);
@@ -80,7 +80,7 @@ class BancoServiceTest {
 
         @Test
         @DisplayName("depositar delega para conta")
-        void depositar() {
+        void depositar() throws ValorInvalidoException {
             ContaCorrente cc = service.criarContaCorrente(500);
             service.depositar(cc.getNumero(), cc.getAgencia(), 100);
             assertEquals(100, cc.getSaldo());

@@ -1,6 +1,5 @@
 package br.com.banco.service;
 
-import br.com.banco.model.Conta;
 import br.com.banco.model.ContaCorrente;
 import br.com.banco.model.ContaPoupanca;
 import br.com.banco.exception.ContaNaoEncontradaException;
@@ -63,10 +62,9 @@ class BancoServiceIntermediarioTest {
     class NaoEncontradaTest {
 
         @Test
-        @DisplayName("buscarConta inexistente lança ContaNaoEncontradaException")
+        @DisplayName("buscarConta inexistente retorna null")
         void buscarInexistente() {
-            assertThrows(ContaNaoEncontradaException.class,
-                () -> service.buscarConta(9999, 1));
+            assertNull(service.buscarConta(9999, 1));
         }
 
         @Test

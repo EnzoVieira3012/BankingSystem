@@ -7,11 +7,11 @@ public class ContaPoupanca extends Conta {
     private double taxaRendimento;
     private final String titular;
 
-    public ContaPoupanca(int numero, int agencia, double taxaRendimento) {
+    public ContaPoupanca(int numero, int agencia, double taxaRendimento) throws ValorInvalidoException {
         this(numero, agencia, "Titular " + numero, taxaRendimento);
     }
 
-    public ContaPoupanca(int numero, int agencia, String titular, double taxaRendimento) {
+    public ContaPoupanca(int numero, int agencia, String titular, double taxaRendimento) throws ValorInvalidoException {
         super(numero, agencia);
         if (taxaRendimento <= 0 || taxaRendimento > 1) {
             throw new ValorInvalidoException("taxa de rendimento", taxaRendimento);
@@ -44,6 +44,11 @@ public class ContaPoupanca extends Conta {
 
     public String getTitular() {
         return titular;
+    }
+
+    @Override
+    public TipoConta getTipo() {
+        return TipoConta.POUPANCA;
     }
 
     @Override

@@ -13,7 +13,7 @@ class ContaTest {
     private ContaPoupanca cp;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ValorInvalidoException {
         cc = new ContaCorrente(1234, 1, 500.0);
         cp = new ContaPoupanca(5678, 1, 0.01);
     }

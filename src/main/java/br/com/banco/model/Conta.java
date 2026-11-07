@@ -5,6 +5,7 @@ import br.com.banco.exception.SaldoInsuficienteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public abstract class Conta {
 
@@ -84,4 +85,7 @@ public abstract class Conta {
         return String.format("Conta{numero=%d, agencia=%d, saldo=%.2f, criada=%s}",
                 numero, agencia, saldo, getDataCriacaoFormatada());
     }
+
+    public abstract String getTitular();
+    public abstract TipoConta getTipo();
 }

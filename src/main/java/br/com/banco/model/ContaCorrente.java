@@ -7,11 +7,11 @@ public class ContaCorrente extends Conta {
     private double limite;
     private final String titular;
 
-    public ContaCorrente(int numero, int agencia, double limite) {
+    public ContaCorrente(int numero, int agencia, double limite) throws ValorInvalidoException {
         this(numero, agencia, "Titular " + numero, limite);
     }
 
-    public ContaCorrente(int numero, int agencia, String titular, double limite) {
+    public ContaCorrente(int numero, int agencia, String titular, double limite) throws ValorInvalidoException {
         super(numero, agencia);
         if (limite < 0) {
             throw new ValorInvalidoException("limite", limite);
@@ -41,6 +41,11 @@ public class ContaCorrente extends Conta {
 
     public String getTitular() {
         return titular;
+    }
+
+    @Override
+    public TipoConta getTipo() {
+        return TipoConta.CORRENTE;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package br.com.banco.persistence;
 
 import br.com.banco.model.Conta;
+import br.com.banco.model.Conta;
 import br.com.banco.model.ContaCorrente;
 import br.com.banco.model.ContaPoupanca;
 import br.com.banco.service.BancoService;
@@ -30,7 +31,7 @@ class BackupContasTest {
 
         @Test
         @DisplayName("Salva contas correntes e poupança")
-        void salvarContas() throws IOException {
+        void salvarContas() throws IOException, ValorInvalidoException {
             BancoService service = new BancoService();
             ContaCorrente cc = service.criarContaCorrente(500);
             cc.depositar(200);
@@ -68,7 +69,7 @@ class BackupContasTest {
 
         @Test
         @DisplayName("Restaura contas do arquivo")
-        void restaurarContas() throws IOException {
+        void restaurarContas() throws IOException, ValorInvalidoException {
             // Primeiro salva
             BancoService serviceOrig = new BancoService();
             ContaCorrente cc = serviceOrig.criarContaCorrente(500);
